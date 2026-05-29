@@ -4,8 +4,10 @@ import { useAuth } from "@/lib/contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
-import { LogOut, LayoutDashboard, FileText, Users, Settings, Building2, Image as ImageIcon, LayoutTemplate, Briefcase } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, Users, Settings, Building2, Image as ImageIcon, LayoutTemplate, Briefcase, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+export const dynamic = "force-dynamic";
 
 export default function AdminLayout({
   children,
@@ -47,7 +49,8 @@ export default function AdminLayout({
     { name: "Blog Posts", href: "/admin/blog", icon: FileText },
     { name: "Team Members", href: "/admin/team", icon: Users },
     { name: "Partners & Clients", href: "/admin/entities", icon: Building2 },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+    { name: "Inquiries", href: "/admin/messages", icon: Mail },
+    { name: "Theme Settings", href: "/admin/settings", icon: Settings },
   ];
 
   return (

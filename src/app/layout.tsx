@@ -3,6 +3,8 @@ import { Inter, Playfair_Display } from "next/font/google";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
 import "./globals.css";
 
+export const revalidate = 60;
+
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -26,6 +28,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background">

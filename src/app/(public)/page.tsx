@@ -34,7 +34,8 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-primary text-primary-foreground pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+      <section className="relative bg-primary text-primary-foreground pt-20
+       pb-24 md:pt-24 md:pb-16 overflow-hidden">
         {heroImg && (
           <div 
             className="absolute inset-0 z-0 opacity-20 bg-cover bg-center"
@@ -43,17 +44,17 @@ export default async function Home() {
         )}
         <div className="container mx-auto px-4 relative z-10">
           <AnimateIn direction="up" delay={0.1} className="max-w-3xl">
-            <h1 className="font-heading text-5xl md:text-7xl font-bold leading-tight mb-6">
+            <h1 className="font-heading text-white text-5xl md:text-7xl font-bold leading-tight mb-6">
               {pageData.heroTitle || "Strategic clarity in a complex world."}
             </h1>
             <p className="text-xl md:text-2xl text-primary-foreground/80 mb-10 max-w-2xl leading-relaxed font-light whitespace-pre-wrap">
               {pageData.heroSubtitle || "We provide premium consulting, advisory, and professional services to propel your enterprise forward with precision."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/services" className={buttonVariants({ size: "lg", className: "bg-white text-primary hover:bg-white/90 text-lg h-14 px-8" })}>
+              <Link href="/services" className={buttonVariants({ size: "lg", className: "bg-primary text-white-foreground hover:bg-secondary/90 text-lg h-14 px-8" })}>
                 Explore Our Services
               </Link>
-              <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "text-white border-white/30 hover:bg-white/10 hover:text-white text-lg h-14 px-8" })}>
+              <Link href="/contact" className={buttonVariants({ size: "lg", variant: "outline", className: "text-primary-foreground bg-transparent border-white/30 hover:bg-white/10 hover:text-white text-lg h-14 px-8" })}>
                 Speak to a Partner
               </Link>
             </div>

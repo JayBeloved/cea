@@ -1,13 +1,29 @@
 import Link from "next/link";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase/client";
 
-export function Footer() {
+export async function Footer() {
+  let logoUrl = "";
+  try {
+    const generalSnap = await getDoc(doc(db, "settings", "general"));
+    if (generalSnap.exists() && generalSnap.data().logoUrl) {
+      logoUrl = generalSnap.data().logoUrl;
+    }
+  } catch (error) {
+    console.error("Error fetching logo:", error);
+  }
   return (
     <footer className="border-t bg-muted/20">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <span className="font-heading font-bold text-2xl tracking-tight">CEA</span>
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={logoUrl} alt="CEA Professional Logo" className="h-10 object-contain grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+              ) : (
+                <span className="font-heading font-bold text-2xl tracking-tight">CEA</span>
+              )}
             </Link>
             <p className="text-muted-foreground text-sm max-w-xs leading-relaxed">
               Premium professional services tailored to elevate your business. Expertise you can trust, execution you can rely on.
