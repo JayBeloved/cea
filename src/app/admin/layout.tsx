@@ -4,7 +4,7 @@ import { useAuth } from "@/lib/contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
-import { LogOut, LayoutDashboard, FileText, Users, Settings, Building2, Image as ImageIcon, LayoutTemplate } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, Users, Settings, Building2, Image as ImageIcon, LayoutTemplate, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function AdminLayout({
@@ -42,6 +42,7 @@ export default function AdminLayout({
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Pages", href: "/admin/pages", icon: LayoutTemplate },
+    { name: "Services", href: "/admin/services", icon: Briefcase },
     { name: "Media Gallery", href: "/admin/gallery", icon: ImageIcon },
     { name: "Blog Posts", href: "/admin/blog", icon: FileText },
     { name: "Team Members", href: "/admin/team", icon: Users },
