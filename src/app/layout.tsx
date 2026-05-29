@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase/client";
 import "./globals.css";
 
 export const revalidate = 60;
@@ -15,10 +17,25 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "CEA Professional Services",
-  description: "Premium professional services firm.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  let logoUrl = "/favicon.ico"; // default
+  try {
+    const generalSnap = await getDoc(doc(db, "settings", "general"));
+    if (generalSnap.exists() && generalSnap.data().logoUrl) {
+      logoUrl = generalSnap.data().logoUrl;
+    }
+  } catch (error) {
+    console.error("Error fetching logo for metadata:", error);
+  }
+
+  return {
+    title: "CEA Professional Services",
+    description: "Premium professional services firm.",
+    icons: {
+      icon: logoUrl,
+    }
+  };
+}
 
 export default function RootLayout({
   children,

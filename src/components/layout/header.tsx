@@ -17,13 +17,12 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2">
-          {logoUrl ? (
+        <Link href="/" className="flex items-center space-x-3">
+          {logoUrl && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={logoUrl} alt="CEA Professional Logo" className="h-10 object-contain" />
-          ) : (
-            <span className="font-heading font-bold text-xl tracking-tight">CEA Professional</span>
+            <img src={logoUrl} alt="CEA Professional Logo" className="h-10 w-auto object-contain" />
           )}
+          <span className="font-heading font-bold text-xl tracking-tight hidden sm:inline-block">CEA Professional</span>
         </Link>
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
           <Link href="/about" className="transition-colors hover:text-foreground/80 text-foreground/60">
