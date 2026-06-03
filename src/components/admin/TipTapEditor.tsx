@@ -20,6 +20,7 @@ export function TipTapEditor({ content, onChange }: TipTapEditorProps) {
       }),
     ],
     content,
+    immediatelyRender: false,
     editorProps: {
       attributes: {
         className: 'prose prose-sm sm:prose-base max-w-none focus:outline-none min-h-[300px] border rounded-b-md p-4 bg-background text-foreground',

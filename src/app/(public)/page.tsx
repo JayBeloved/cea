@@ -4,6 +4,8 @@ import { ArrowRight, BarChart3, Briefcase, Globe2, ShieldCheck, Zap, Users2, Lan
 import { doc, getDoc, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { AnimateIn } from "@/components/ui/animate-in";
+import { HeroSlideshow } from "@/components/public/HeroSlideshow";
+import { DynamicSectionRenderer } from "@/components/public/DynamicSectionRenderer";
 
 const iconMap: Record<string, any> = {
   Briefcase, BarChart3, Globe2, ShieldCheck, Zap, Users2, Landmark, Lightbulb, PieChart, Scale
@@ -16,11 +18,20 @@ export default async function Home() {
   const pageDoc = await getDoc(doc(db, "pages", "home"));
   const pageData = pageDoc.exists() ? pageDoc.data().sections || {} : {};
 
-  // Ensure Firebase Storage URLs have ?alt=media appended if missing (fixes JSON response issue)
-  let heroImg = pageData.heroImageUrl || "";
-  if (heroImg && heroImg.includes("firebasestorage.googleapis.com") && !heroImg.includes("alt=media")) {
-    heroImg += "?alt=media";
-  }
+  // Process hero images (newline separated string from the new textarea)
+  let rawImagesText = pageData.heroImageUrls || pageData.heroImageUrl || "";
+  let heroImagesArray = rawImagesText
+    .split(/[\n,]+/) // split by newline or comma
+    .map((s: string) => s.trim())
+    .filter(Boolean);
+
+  // Ensure Firebase Storage URLs have ?alt=media appended if missing
+  heroImagesArray = heroImagesArray.map((url: string) => {
+    if (url.includes("firebasestorage.googleapis.com") && !url.includes("alt=media")) {
+      return url + (url.includes("?") ? "&" : "?") + "alt=media";
+    }
+    return url;
+  });
 
   // Fetch client logos
   const entitiesQuery = query(collection(db, "entities"), where("type", "==", "client"));
@@ -34,14 +45,8 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative bg-primary text-primary-foreground pt-20
-       pb-24 md:pt-24 md:pb-16 overflow-hidden">
-        {heroImg && (
-          <div 
-            className="absolute inset-0 z-0 opacity-20 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroImg})` }}
-          />
-        )}
+      <section className="relative bg-primary text-primary-foreground pt-20 pb-24 md:pt-24 md:pb-16 overflow-hidden">
+        {heroImagesArray.length > 0 && <HeroSlideshow images={heroImagesArray} />}
         <div className="container mx-auto px-4 relative z-10">
           <AnimateIn direction="up" delay={0.1} className="max-w-3xl">
             <h1 className="font-heading text-white text-5xl md:text-7xl font-bold leading-tight mb-6">
@@ -139,6 +144,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      
+      {/* Custom Dynamic Sections */}
+      <DynamicSectionRenderer pageId="home" />
     </>
   );
 }

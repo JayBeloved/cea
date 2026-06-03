@@ -4,7 +4,7 @@ import { useAuth } from "@/lib/contexts/AuthContext";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Link from "next/link";
-import { LogOut, LayoutDashboard, FileText, Users, Settings, Building2, Image as ImageIcon, LayoutTemplate, Briefcase, Mail } from "lucide-react";
+import { LogOut, LayoutDashboard, FileText, Users, Settings, Building2, Image as ImageIcon, LayoutTemplate, Briefcase, Mail, BookOpen, Blocks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
@@ -43,7 +43,9 @@ export default function AdminLayout({
 
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "User Manual", href: "/admin/guide", icon: BookOpen },
     { name: "Pages", href: "/admin/pages", icon: LayoutTemplate },
+    { name: "Custom Sections", href: "/admin/custom-sections", icon: Blocks },
     { name: "Services", href: "/admin/services", icon: Briefcase },
     { name: "Media Gallery", href: "/admin/gallery", icon: ImageIcon },
     { name: "Blog Posts", href: "/admin/blog", icon: FileText },

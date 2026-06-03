@@ -1,6 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { AnimateIn } from "@/components/ui/animate-in";
+import { DynamicSectionRenderer } from "@/components/public/DynamicSectionRenderer";
 
 export const revalidate = 60;
 
@@ -51,6 +52,9 @@ export default async function AboutPage() {
           </AnimateIn>
         </div>
       </div>
+      
+      {/* Custom Dynamic Sections */}
+      <DynamicSectionRenderer pageId="about" />
     </div>
   );
 }

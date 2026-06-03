@@ -1,14 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Users, Building2, Eye } from "lucide-react";
+import { FileText, Users, Building2, Mail } from "lucide-react";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { collection, query, where, getCountFromServer } from "firebase/firestore";
+import { db } from "@/lib/firebase/client";
 
-export default function AdminDashboard() {
+export const revalidate = 0; // Ensure admin dashboard doesn't serve stale stats
+
+export default async function AdminDashboard() {
+  // Fetch live counts
+  const postsCount = (await getCountFromServer(query(collection(db, "posts"), where("isDraft", "==", false)))).data().count;
+  const teamCount = (await getCountFromServer(collection(db, "team"))).data().count;
+  const entitiesCount = (await getCountFromServer(collection(db, "entities"))).data().count;
+  const unreadMessagesCount = (await getCountFromServer(query(collection(db, "messages"), where("read", "==", false)))).data().count;
+
   const stats = [
-    { title: "Published Posts", value: "0", icon: FileText, href: "/admin/blog" },
-    { title: "Team Members", value: "0", icon: Users, href: "/admin/team" },
-    { title: "Partners & Clients", value: "0", icon: Building2, href: "/admin/entities" },
-    { title: "Total Views", value: "0", icon: Eye, href: "#" },
+    { title: "Published Posts", value: postsCount.toString(), icon: FileText, href: "/admin/blog" },
+    { title: "Team Members", value: teamCount.toString(), icon: Users, href: "/admin/team" },
+    { title: "Partners & Clients", value: entitiesCount.toString(), icon: Building2, href: "/admin/entities" },
+    { title: "Unread Messages", value: unreadMessagesCount.toString(), icon: Mail, href: "/admin/messages" },
   ];
 
   return (

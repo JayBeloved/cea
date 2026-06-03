@@ -17,7 +17,7 @@ const PAGE_SCHEMAS: Record<string, { label: string; fields: { key: string; label
     fields: [
       { key: "heroTitle", label: "Hero Title", type: "text", description: "The main headline on the homepage" },
       { key: "heroSubtitle", label: "Hero Subtitle", type: "textarea", description: "The text below the main headline" },
-      { key: "heroImageUrl", label: "Hero Background Image URL", type: "image", description: "Copy this from the Media Gallery" },
+      { key: "heroImageUrls", label: "Hero Background Image URLs", type: "textarea", description: "Paste image URLs from the Media Gallery, one per line. If you provide multiple, they will automatically display as a slideshow." },
       { key: "servicesHeadline", label: "Services Section Headline", type: "text" },
     ]
   },

@@ -2,6 +2,7 @@ import { doc, getDoc, collection, getDocs, query, orderBy } from "firebase/fires
 import { db } from "@/lib/firebase/client";
 import { BarChart3, Briefcase, Globe2, ShieldCheck, Zap, Users2, Landmark, Lightbulb, PieChart, Scale } from "lucide-react";
 import { AnimateIn } from "@/components/ui/animate-in";
+import { DynamicSectionRenderer } from "@/components/public/DynamicSectionRenderer";
 
 const iconMap: Record<string, any> = {
   Briefcase, BarChart3, Globe2, ShieldCheck, Zap, Users2, Landmark, Lightbulb, PieChart, Scale
@@ -48,6 +49,9 @@ export default async function ServicesPage() {
         </div>
 
       </div>
+      
+      {/* Custom Dynamic Sections */}
+      <DynamicSectionRenderer pageId="services" />
     </div>
   );
 }
