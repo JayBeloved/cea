@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { Metadata } from "next";
 
 export const revalidate = 60;
 
@@ -13,6 +14,29 @@ export async function generateStaticParams() {
   return snapshot.docs.map(doc => ({
     slug: doc.data().slug,
   }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const q = query(collection(db, "posts"), where("slug", "==", slug));
+  const snapshot = await getDocs(q);
+
+  if (snapshot.empty) return { title: "Post Not Found" };
+  const post = snapshot.docs[0].data();
+
+  // Strip HTML for the meta description
+  const cleanDescription = post.content ? post.content.replace(/<[^>]*>?/gm, '').substring(0, 160) + "..." : "Read this article on CEA Professional Services.";
+
+  return {
+    title: post.title,
+    description: cleanDescription,
+    openGraph: {
+      title: post.title,
+      description: cleanDescription,
+      type: "article",
+    }
+  };
 }
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {

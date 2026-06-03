@@ -18,22 +18,41 @@ const playfair = Playfair_Display({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  let logoUrl = "/favicon.ico"; // default
+  let siteName = "CEA Professional Services";
+  
   try {
     const generalSnap = await getDoc(doc(db, "settings", "general"));
-    if (generalSnap.exists() && generalSnap.data().logoUrl) {
-      logoUrl = generalSnap.data().logoUrl;
+    if (generalSnap.exists() && generalSnap.data().siteName) {
+      siteName = generalSnap.data().siteName;
     }
   } catch (error) {
-    console.error("Error fetching logo for metadata:", error);
+    console.error("Error fetching settings for metadata:", error);
   }
 
+  const description = "Premium professional advisory and strategy consulting. We deliver end-to-end strategic solutions to solve complex challenges.";
+
   return {
-    title: "CEA Professional Services",
-    description: "Premium professional services firm.",
-    icons: {
-      icon: logoUrl,
-    }
+    title: {
+      template: `%s | ${siteName}`,
+      default: siteName,
+    },
+    description,
+    openGraph: {
+      title: siteName,
+      description,
+      siteName,
+      type: "website",
+      locale: "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteName,
+      description,
+    },
+    icons: [
+      { rel: "icon", url: "/icon.svg", type: "image/svg+xml" }
+    ],
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ceaprofessional.ng"),
   };
 }
 

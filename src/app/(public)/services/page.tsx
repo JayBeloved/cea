@@ -3,9 +3,15 @@ import { db } from "@/lib/firebase/client";
 import { BarChart3, Briefcase, Globe2, ShieldCheck, Zap, Users2, Landmark, Lightbulb, PieChart, Scale } from "lucide-react";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { DynamicSectionRenderer } from "@/components/public/DynamicSectionRenderer";
+import { Metadata } from "next";
 
 const iconMap: Record<string, any> = {
   Briefcase, BarChart3, Globe2, ShieldCheck, Zap, Users2, Landmark, Lightbulb, PieChart, Scale
+};
+
+export const metadata: Metadata = {
+  title: "Our Services",
+  description: "Explore our comprehensive suite of professional advisory and strategy consulting services.",
 };
 
 export const revalidate = 60;

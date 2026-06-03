@@ -2,6 +2,12 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { DynamicSectionRenderer } from "@/components/public/DynamicSectionRenderer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Leadership",
+  description: "Meet the experienced professionals driving strategic clarity and delivering transformative results globally.",
+};
 
 export const revalidate = 60;
 

@@ -2,6 +2,12 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/client";
 import { AnimateIn } from "@/components/ui/animate-in";
 import { DynamicSectionRenderer } from "@/components/public/DynamicSectionRenderer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description: "Learn about our mission, vision, and the core values that drive our strategic advisory firm.",
+};
 
 export const revalidate = 60;
 
